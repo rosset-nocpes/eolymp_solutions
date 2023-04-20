@@ -1,33 +1,30 @@
 #include <iostream>
-#include <iomanip>
+#include <cstring>
 using namespace std;
 
-int main()
-{
-    //cout<<"Hello World";
-    double l, v, n;
+int main() {
+    int dp[100010];
+    int l, v, n, vi, t, mx;
     cin >> l >> v >> n;
-    int const N = n;
-    int array[N][2];
-    for(int i = 0; i<N; i++){
-        for(int j = 0; j < 2; j++){
-            cin >> array[i][j];
+    memset(dp, 0x3F, sizeof(dp));
+    dp[0] = mx = 0;
+    for(int i = 0; i < n; i++) {
+        cin >> vi >> t;
+        for(int j = mx; j >= 0; j--) {
+            if(dp[j] + t < dp[j + vi]) {
+                dp[j + vi] = dp[j] + t;
+            }
+        }
+        mx += vi;
+    }
+
+    double res = 1e10;
+    for(int i = 0; i <= mx; i++) {
+        double temp = 1.0 * l / (v + i) + dp[i];
+        if(temp < res) {
+            res = temp;
         }
     }
-    double extra_v = 0;
-    double extra_t = 0;
-    for(int i = 0; i < N; i++){
-        extra_v+=array[i][0];
-    }
-    for(int i = 0; i < N; i++){
-        extra_t+=array[i][1];
-    }
-    double answer = l/(v+extra_v)+extra_t;
-    if(l/v>answer){
-        cout <<fixed<<setprecision(6)<< answer;
-    }
-    else{
-        cout <<fixed<<setprecision(6)<< l/v;
-    }
+    printf("%.6lf\n", res);
     return 0;
 }
