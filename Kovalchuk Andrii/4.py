@@ -1,15 +1,12 @@
-a = list(map(float, input().split()))
+x1, y1, r1, x2, y2, r2 = map(float, input().split())
 
-distance = ((a[3] - a[0])**2 + (a[4] - a[1])**2)**0.5
+с = abs(((x2 - x1)**2 + (y2 - y1)**2)**0.5)
 
-if distance > a[2] + a[5]:
+if с > r1 + r2 or с < abs(r2 - r1):
     print(0)
-elif distance == 0 and a[5] == a[2]:
+elif с == 0 and r2 == r1:
     print(-1)
+elif с == r2 + r1 or с == abs(r2 - r1):
+    print(1)
 else:
-    if distance == a[5] + a[2] or distance == abs(a[5] - a[2]):
-        print(1)
-    elif distance < abs(a[5] - a[2]):
-        print(0)
-    else:
-        print(2)
+    print(2)
